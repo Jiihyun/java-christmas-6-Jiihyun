@@ -1,4 +1,4 @@
-package christmas.parser;
+package christmas.converter;
 
 import christmas.exception.ExceptionMessage;
 
@@ -10,10 +10,10 @@ import java.util.stream.IntStream;
 import static christmas.validator.InputValidator.validateBlank;
 import static christmas.validator.InputValidator.validateMenuAndQuantityFormat;
 
-public class Parser {
+public class Converter {
     private static final String REGEX = "[,\\-]"; // `,`와 `-`를 기준으로 split 해준다
     private static final int EVEN_LENGTH = 2;
-    public static int parseStrToInt(String input, ExceptionMessage exceptionMessage) {
+    public static int convertToInt(String input, ExceptionMessage exceptionMessage) {
         try {
             validateBlank(input, exceptionMessage);
             return Integer.parseInt(input);
@@ -22,7 +22,7 @@ public class Parser {
         }
     }
 
-    public static Map<String, Integer> parseStrToMap(String input, ExceptionMessage exceptionMessage) {
+    public static Map<String, Integer> convertToMap(String input, ExceptionMessage exceptionMessage) {
         validateBlank(input, exceptionMessage);
         validateMenuAndQuantityFormat(input);
 
@@ -39,7 +39,7 @@ public class Parser {
     private static Function<Integer, Integer> getValueMapper(String[] menuQuantityPairs) {
         return i -> {
             int indexOfQuantity = i * 2 + 1;
-            return parseStrToInt(menuQuantityPairs[indexOfQuantity], ExceptionMessage.INPUT_ORDER_FORMAT);
+            return convertToInt(menuQuantityPairs[indexOfQuantity], ExceptionMessage.INPUT_ORDER_FORMAT);
         };
     }
 

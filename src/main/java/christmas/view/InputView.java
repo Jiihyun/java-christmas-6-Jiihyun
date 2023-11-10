@@ -4,7 +4,7 @@ import christmas.domain.Day;
 import christmas.exception.ExceptionMessage;
 import christmas.io.reader.Reader;
 import christmas.io.writer.Writer;
-import christmas.parser.Parser;
+import christmas.converter.Converter;
 
 import java.util.Map;
 
@@ -26,7 +26,7 @@ public class InputView {
         writer.writeln(INPUT_VISIT_DAY);
         try {
             String input = reader.readLine();
-            int day = Parser.parseStrToInt(input, ExceptionMessage.INPUT_DAY_FORMAT);
+            int day = Converter.convertToInt(input, ExceptionMessage.INPUT_DAY_FORMAT);
             return new Day(day);
         } catch (IllegalArgumentException exception) {
             writer.writeln(exception.getMessage());
@@ -38,7 +38,7 @@ public class InputView {
         writer.writeln(INPUT_MENU_AND_QUANTITY);
         try {
             String input = reader.readLine();
-            return Parser.parseStrToMap(input, ExceptionMessage.INPUT_ORDER_FORMAT);
+            return Converter.convertToMap(input, ExceptionMessage.INPUT_ORDER_FORMAT);
         } catch (IllegalArgumentException exception) {
             writer.writeln(exception.getMessage());
             return getMenuAndQuantity();
