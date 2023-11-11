@@ -16,4 +16,8 @@ public class OrderItem {
         OrderValidator.validateMenuQuantity(quantity);
         return new OrderItem(menu, quantity);
     }
+
+    public int getPurchasedAmount() {
+        return menu.getPrice() * quantity;
+    }
 }

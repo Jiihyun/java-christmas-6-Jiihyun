@@ -50,6 +50,9 @@ public enum Menu {
 
     public MenuCategory getMenuCategory() {
         return menuCategory;
+    }
 
+    public int getPrice() {
+        return price;
     }
 }

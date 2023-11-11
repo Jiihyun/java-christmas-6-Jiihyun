@@ -37,6 +37,17 @@ public class OrderItems {
         };
     }
 
+    public List<OrderItem> getMenuItems() {
+        return orderItems;
+    }
+
+    public int getTotalPurchasedAmount() {
+
+        return orderItems.stream()
+                .map(OrderItem::getPurchasedAmount)
+                .reduce(0, Integer::sum);
+    }
+
 }
 
 
