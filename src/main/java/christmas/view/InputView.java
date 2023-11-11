@@ -1,10 +1,11 @@
 package christmas.view;
 
+import christmas.converter.Converter;
 import christmas.domain.Day;
+import christmas.domain.OrderItems;
 import christmas.exception.ExceptionMessage;
 import christmas.io.reader.Reader;
 import christmas.io.writer.Writer;
-import christmas.converter.Converter;
 
 import java.util.Map;
 
@@ -21,7 +22,7 @@ public class InputView {
         this.reader = reader;
     }
 
-    public Day getVisitDay() {
+    public Day readVisitDay() {
         //TODO: 재귀에 시도 횟수 제한 걸어주기(스택오버플로우를 막자!!)
         writer.writeln(INPUT_VISIT_DAY);
         try {
@@ -30,18 +31,19 @@ public class InputView {
             return new Day(day);
         } catch (IllegalArgumentException exception) {
             writer.writeln(exception.getMessage());
-            return getVisitDay();
+            return readVisitDay();
         }
     }
 
-    public Map<String, Integer> getMenuAndQuantity() {
+    public OrderItems readMenuItems() {
         writer.writeln(INPUT_MENU_AND_QUANTITY);
         try {
             String input = reader.readLine();
-            return Converter.convertToMap(input, ExceptionMessage.INPUT_ORDER_FORMAT);
+            Map<String, Integer> menuNamesAndQuantities = Converter.convertToMap(input, ExceptionMessage.INPUT_ORDER_FORMAT);
+            return OrderItems.from(menuNamesAndQuantities);
         } catch (IllegalArgumentException exception) {
             writer.writeln(exception.getMessage());
-            return getMenuAndQuantity();
+            return readMenuItems();
         }
     }
 }
