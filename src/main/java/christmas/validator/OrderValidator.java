@@ -42,8 +42,7 @@ public class OrderValidator {
     private static void validateTotalMenuQuantity(Map<String, Integer> menuNamesAndQuantities) {
         int totalQuantity = menuNamesAndQuantities.values()
                 .stream()
-                .mapToInt(Integer::intValue)
-                .sum();
+                .reduce(0, Integer::sum);
         if (totalQuantity > MAXIMUM_QUANTITY) {
             throw ExceptionMessage.INPUT_ORDER_FORMAT.getException();
         }
