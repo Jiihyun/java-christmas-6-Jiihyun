@@ -1,5 +1,7 @@
 package christmas.domain;
 
+import christmas.validator.OrderValidator;
+
 public class OrderItem {
     private final Menu menu;
 
@@ -11,6 +13,7 @@ public class OrderItem {
     }
 
     public static OrderItem of(Menu menu, int quantity) {
+        OrderValidator.validateMenuQuantity(quantity);
         return new OrderItem(menu, quantity);
     }
 }

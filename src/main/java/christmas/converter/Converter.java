@@ -13,6 +13,7 @@ import static christmas.validator.InputValidator.validateMenuAndQuantityFormat;
 public class Converter {
     private static final String REGEX = "[,\\-]"; // `,`와 `-`를 기준으로 split 해준다
     private static final int EVEN_LENGTH = 2;
+
     public static int convertToInt(String input, ExceptionMessage exceptionMessage) {
         try {
             validateBlank(input, exceptionMessage);
@@ -27,13 +28,26 @@ public class Converter {
         validateMenuAndQuantityFormat(input);
 
         String[] menuQuantityPairs = input.split(REGEX);
+        try {
+            return getMenuNamesAndQuantities(menuQuantityPairs);
+        } catch (IllegalStateException e) {
+            throw exceptionMessage.getException();
+        }
+    }
 
+    private static Map<String, Integer> getMenuNamesAndQuantities(String[] menuQuantityPairs) {
         return IntStream.range(0, menuQuantityPairs.length / EVEN_LENGTH)
-            .boxed()
-            .collect(Collectors.toMap(
-                    getKeyMapper(menuQuantityPairs),
-                    getValueMapper(menuQuantityPairs)
-            ));
+                .boxed()
+                .collect(Collectors.toMap(
+                        getKeyMapper(menuQuantityPairs),
+                        getValueMapper(menuQuantityPairs)));
+    }
+
+    private static Function<Integer, String> getKeyMapper(String[] menuQuantityPairs) {
+        return i -> {
+            int indexOfMenu = i * 2;
+            return menuQuantityPairs[indexOfMenu];
+        };
     }
 
     private static Function<Integer, Integer> getValueMapper(String[] menuQuantityPairs) {
@@ -43,10 +57,4 @@ public class Converter {
         };
     }
 
-    private static Function<Integer, String> getKeyMapper(String[] menuQuantityPairs) {
-        return i -> {
-            int indexOfMenu = i * 2;
-            return menuQuantityPairs[indexOfMenu];
-        };
-    }
 }

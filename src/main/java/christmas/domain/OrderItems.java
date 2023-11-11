@@ -1,7 +1,10 @@
 package christmas.domain;
 
+import christmas.validator.OrderValidator;
+
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class OrderItems {
@@ -13,19 +16,27 @@ public class OrderItems {
     }
 
     public static OrderItems from(Map<String, Integer> menuNamesAndQuantities) {
-        List<OrderItem> orderItem = menuNamesAndQuantities.entrySet()
-                .stream()
-                .map(entry -> {
-                    Menu menu = Menu.from(entry.getKey());
-                    Integer quantity = entry.getValue();
+        OrderValidator.validateOrderItems(menuNamesAndQuantities);
 
-                    return OrderItem.of(menu, quantity);
-                })
-                .collect(Collectors.toList());
-
-        return new OrderItems(orderItem);
+        List<OrderItem> orderItems = getOrderItems(menuNamesAndQuantities);
+        return new OrderItems(orderItems);
     }
-}
 
+    private static List<OrderItem> getOrderItems(Map<String, Integer> menuNamesAndQuantities) {
+        return menuNamesAndQuantities.entrySet()
+                .stream()
+                .map(getOrderItem())
+                .collect(Collectors.toList());
+    }
+
+    private static Function<Map.Entry<String, Integer>, OrderItem> getOrderItem() {
+        return entry -> {
+            Menu menu = Menu.from(entry.getKey());
+            Integer quantity = entry.getValue();
+            return OrderItem.of(menu, quantity);
+        };
+    }
+
+}
 
 

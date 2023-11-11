@@ -3,6 +3,7 @@ package christmas.domain;
 import christmas.exception.ExceptionMessage;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import static christmas.domain.MenuCategory.*;
 
@@ -39,9 +40,16 @@ public enum Menu {
     }
 
     public static Menu from(String menuName) {
+        Predicate<Menu> isSameName = menu -> menu.name.equals(menuName);
+
         return menus.stream()
-                .filter(menu -> menu.name.equals(menuName))
+                .filter(isSameName)
                 .findFirst()
                 .orElseThrow(ExceptionMessage.INPUT_ORDER_FORMAT::getException);
+    }
+
+    public MenuCategory getMenuCategory() {
+        return menuCategory;
+
     }
 }
