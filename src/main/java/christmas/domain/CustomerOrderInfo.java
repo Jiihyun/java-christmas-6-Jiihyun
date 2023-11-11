@@ -7,6 +7,8 @@ public class CustomerOrderInfo {
     private final Day day;
     private final OrderItems orderItems;
     private final boolean hasChampagne = isTotalPurchasedAmountAboveMinimum();
+    private final int totalDiscountAmount = getTotalDiscountAmount();
+
 
     public CustomerOrderInfo(Day day, OrderItems orderItems) {
         this.day = day;
@@ -17,12 +19,13 @@ public class CustomerOrderInfo {
         return orderItems.getTotalPurchasedAmount() >= MINIMUM_TOTAL_PURCHASED_AMOUNT;
     }
 
-    public void applyDiscountEvent() {
+    public int getTotalDiscountAmount() {
         DiscountManager discountManager = new DiscountManager(
                 day,
                 orderItems.getMenuItems(),
                 orderItems.getTotalPurchasedAmount()
         );
         discountManager.discount();
+        return discountManager.getTotalDiscountAmount();
     }
 }

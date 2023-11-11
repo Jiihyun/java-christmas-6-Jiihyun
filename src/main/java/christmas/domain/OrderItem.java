@@ -20,4 +20,8 @@ public class OrderItem {
     public int getPurchasedAmount() {
         return menu.getPrice() * quantity;
     }
+
+    public boolean isSameCategoryAs(MenuCategory menuCategory) {
+        return menu.getMenuCategory() == menuCategory;
+    }
 }
