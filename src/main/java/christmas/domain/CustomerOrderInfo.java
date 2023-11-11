@@ -9,8 +9,8 @@ public class CustomerOrderInfo {
     private final Day day;
     private final OrderItems orderItems;
     private final boolean hasChampagne = isTotalPurchasedAmountAboveMinimum();
-    private final int totalBenefitAmount = getTotalBenefitAmount();
     private final int totalDiscountAmount = getTotalDiscountAmount();
+    private final int totalBenefitAmount = getTotalBenefitAmount();
 
 
     public CustomerOrderInfo(Day day, OrderItems orderItems) {
@@ -33,10 +33,14 @@ public class CustomerOrderInfo {
     }
 
     public int getTotalBenefitAmount() {
-        int sum = getTotalDiscountAmount();
+        int sum = totalDiscountAmount;
         if (hasChampagne) {
             sum += PRICE_OF_CHAMPAIGE.value;
         }
         return sum;
+    }
+
+    public int getEstimatedPaymentAmount() {
+        return totalBenefitAmount - totalDiscountAmount;
     }
 }
