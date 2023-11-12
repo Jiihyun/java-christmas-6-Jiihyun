@@ -1,5 +1,6 @@
 package christmas.view;
 
+import christmas.domain.Badge;
 import christmas.domain.CustomerOrderInfo;
 import christmas.domain.Day;
 import christmas.domain.dto.output.OrderItemResponse;
@@ -48,6 +49,7 @@ public class OutputView {
         writer.writeln(BENEFIT_DETAILS_MSG + getBenefitDetails(customerOrderInfo));
         writer.writeln(TOTAL_BENEFIT_AMOUNT_MSG + String.format(MONEY_FORMAT, -customerOrderInfo.getTotalBenefitAmount()));
         writer.writeln(EXPECTED_AMOUNT_AFTER_DISCOUNT_MSG + String.format(MONEY_FORMAT, customerOrderInfo.getExpectedPayAmount()));
+        writer.writeln(DECEMBER_EVENT_BADGE_MSG + Badge.getBadge(customerOrderInfo).getName());
     }
 
     private String getGift(CustomerOrderInfo customerOrderInfo) {
