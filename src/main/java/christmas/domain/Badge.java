@@ -1,5 +1,7 @@
 package christmas.domain;
 
+import christmas.domain.discount.DiscountInfos;
+
 import java.util.Comparator;
 import java.util.List;
 
@@ -8,7 +10,7 @@ public enum Badge {
     STAR("별", 5_000),
     TREE("트리", 10_000),
     SANTA("산타", 20_000);
-    private static final List<Badge> badgeCategory = List.of(NONE, STAR, TREE, SANTA);
+    private static final List<Badge> badgeCategory = List.of(values());
     private final String name;
     private final int minimumAmount;
 
@@ -17,8 +19,8 @@ public enum Badge {
         this.minimumAmount = minimumAmount;
     }
 
-    public static Badge getBadge(CustomerOrderInfo customerOrderInfo) {
-        return badgeCategory.stream().filter(badge -> badge.minimumAmount <= customerOrderInfo.getTotalBenefitAmount())
+    public static Badge getBadge(DiscountInfos discountInfos) {
+        return badgeCategory.stream().filter(badge -> badge.minimumAmount <= Math.abs(discountInfos.getTotalBenefitAmount()))
                 .max(Comparator.comparingInt(Badge::getMinimumAmount))
                 .orElse(NONE);
     }
