@@ -29,4 +29,8 @@ public class OrderItem {
         }
         return 0;
     }
+
+    public OrderItemResponse toOrderItemResponse() {
+        return new OrderItemResponse(menu.getName(), quantity);
+    }
 }

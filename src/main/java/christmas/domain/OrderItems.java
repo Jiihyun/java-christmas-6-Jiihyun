@@ -1,5 +1,6 @@
 package christmas.domain;
 
+import christmas.domain.dto.output.OrderItemsResponse;
 import christmas.validator.OrderValidator;
 
 import java.util.List;
@@ -48,6 +49,11 @@ public class OrderItems {
                 .reduce(0, Integer::sum);
     }
 
+    public OrderItemsResponse toOrderItemsResponse() {
+        return new OrderItemsResponse(orderItems.stream()
+                .map(OrderItem::toOrderItemResponse)
+                .toList());
+    }
 }
 
 
