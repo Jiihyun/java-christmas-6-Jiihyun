@@ -11,7 +11,7 @@ public enum ExceptionMessage {
         this.message = String.format("%s %s", PREFIX, message);
     }
 
-    public GameException getException() {
-        return new GameException(this.message);
+    public ProgramException getException() {
+        return new ProgramException(this.message);
     }
 }
