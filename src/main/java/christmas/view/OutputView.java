@@ -31,7 +31,7 @@ public class OutputView {
     }
 
     public void printBenefitPreviewMsg(Day day) {
-        writer.writeln(String.format(BENEFIT_PREVIEW_MSG, DECEMBER, day.getDay()));
+        writer.writef(BENEFIT_PREVIEW_MSG, DECEMBER, day.getDay());
     }
 
     public void printOrderedMenu(OrderItemsResponse orderItemsResponse) {

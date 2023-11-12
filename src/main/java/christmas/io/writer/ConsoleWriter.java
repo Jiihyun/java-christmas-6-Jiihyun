@@ -1,9 +1,9 @@
 package christmas.io.writer;
 
-public class ConsoleWriter implements Writer{
+public class ConsoleWriter implements Writer {
     @Override
-    public void write(String message) {
-        System.out.print(message);
+    public void writef(String format, Object... args) {
+        System.out.printf(format, args);
     }
 
     @Override
