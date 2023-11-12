@@ -6,6 +6,7 @@ import christmas.domain.OrderItem;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import static christmas.domain.discount.DiscountAmountRule.MINIMUM_TOTAL_PURCHASED_AMOUNT;
 
@@ -24,7 +25,7 @@ public class DiscountManager {
     }
 
     public void discount() {
-        if (totalPurchaseAmount < MINIMUM_TOTAL_PURCHASED_AMOUNT.value) {
+        if (totalPurchaseAmount < MINIMUM_TOTAL_PURCHASED_AMOUNT.getValue()) {
             return;
         }
         christmasDDayEvent();
@@ -73,5 +74,9 @@ public class DiscountManager {
 
     public int getTotalDiscountAmount() {
         return discountAmount.getTotalDiscountAmount();
+    }
+
+    public Map<String, Integer> getDiscountAppliedEvent() {
+        return discountAmount.getDiscountAppliedEvent();
     }
 }

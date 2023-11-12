@@ -9,9 +9,13 @@ public enum DiscountAmountRule {
     SPECIAL_DISCOUNT(1000),
     PRICE_OF_CHAMPAIGE(25_000);
 
-    public final int value;
+    private final int value;
 
     DiscountAmountRule(int value) {
         this.value = value;
+    }
+
+    public int getValue() {
+        return value;
     }
 }
