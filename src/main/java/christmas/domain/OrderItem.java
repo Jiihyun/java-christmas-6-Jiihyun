@@ -1,5 +1,6 @@
 package christmas.domain;
 
+import christmas.domain.dto.output.OrderItemResponse;
 import christmas.validator.OrderValidator;
 
 public class OrderItem {
@@ -21,7 +22,11 @@ public class OrderItem {
         return menu.getPrice() * quantity;
     }
 
-    public boolean isSameCategoryAs(MenuCategory menuCategory) {
-        return menu.getMenuCategory() == menuCategory;
+    public int getQuantityInSameCategory(MenuCategory menuCategory) {
+        boolean isSameCategory = menu.getMenuCategory() == menuCategory;
+        if (isSameCategory) {
+            return quantity;
+        }
+        return 0;
     }
 }

@@ -21,17 +21,17 @@ public class DiscountAmount {
     }
 
     public void applyWeekdayDiscount(List<OrderItem> orderItems) {
-        long weekdayDiscountAmount = orderItems.stream()
-                .filter(orderItem -> orderItem.isSameCategoryAs(MenuCategory.DESSERT))
-                .count();
-        totalWeekdayDiscountAmount += WEEKDAY_DISCOUNT.value * weekdayDiscountAmount;
+        int weekdayDiscountQuantity = orderItems.stream()
+                .mapToInt(orderItem -> orderItem.getQuantityInSameCategory(MenuCategory.DESSERT))
+                .sum();
+        totalWeekdayDiscountAmount += WEEKDAY_DISCOUNT.value * weekdayDiscountQuantity;
     }
 
     public void applyWeekendDiscount(List<OrderItem> orderItems) {
-        long weekendDiscountAmount = orderItems.stream()
-                .filter(orderItem -> orderItem.isSameCategoryAs(MenuCategory.MAIN))
-                .count();
-        totalWeekendDiscountAmount += WEEKEND_DISCOUNT.value * weekendDiscountAmount;
+        int weekendDiscountQuantity = orderItems.stream()
+                .mapToInt(orderItem -> orderItem.getQuantityInSameCategory(MenuCategory.MAIN))
+                .sum();
+        totalWeekendDiscountAmount += WEEKEND_DISCOUNT.value * weekendDiscountQuantity;
     }
 
     public void applySpecialDiscount() {
