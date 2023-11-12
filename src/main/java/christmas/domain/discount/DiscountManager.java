@@ -7,8 +7,9 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 
+import static christmas.domain.discount.DiscountAmountRule.MINIMUM_TOTAL_PURCHASED_AMOUNT;
+
 public class DiscountManager {
-    private static final int MINIMUM_PURCHASE_AMOUNT = 10000;
     private static final int CHRISTMAS_DAY = 25;
     private final Day day;
     private final List<OrderItem> orderItems;
@@ -23,7 +24,7 @@ public class DiscountManager {
     }
 
     public void discount() {
-        if (totalPurchaseAmount < MINIMUM_PURCHASE_AMOUNT) {
+        if (totalPurchaseAmount < MINIMUM_TOTAL_PURCHASED_AMOUNT.value) {
             return;
         }
         christmasDDayEvent();
@@ -59,7 +60,7 @@ public class DiscountManager {
     private void specialEvent() {
         DayOfWeek dayOfWeek = getDayOfWeek();
         int orderDate = day.getDay();
-        if (orderDate != CHRISTMAS_DAY || dayOfWeek != DayOfWeek.SUNDAY) {
+        if (orderDate != CHRISTMAS_DAY && dayOfWeek != DayOfWeek.SUNDAY) {
             return;
         }
         discountAmount.applySpecialDiscount();

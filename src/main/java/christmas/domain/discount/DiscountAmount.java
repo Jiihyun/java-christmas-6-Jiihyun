@@ -5,7 +5,7 @@ import christmas.domain.OrderItem;
 
 import java.util.List;
 
-import static christmas.domain.discount.DisCountAmountRule.*;
+import static christmas.domain.discount.DiscountAmountRule.*;
 
 public class DiscountAmount {
     private int totalChristmasDDayDiscountAmount = 0;

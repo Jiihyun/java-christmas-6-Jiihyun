@@ -1,6 +1,7 @@
 package christmas.domain.discount;
 
-public enum DisCountAmountRule {
+public enum DiscountAmountRule {
+    MINIMUM_TOTAL_PURCHASED_AMOUNT(10_000),
     CHRISTMAS_MINIMUM_DISCOUNT(1000),
     WEEKDAY_DISCOUNT(2023),
     WEEKEND_DISCOUNT(2023),
@@ -9,7 +10,7 @@ public enum DisCountAmountRule {
 
     public final int value;
 
-    DisCountAmountRule(int value) {
+    DiscountAmountRule(int value) {
         this.value = value;
     }
 }
