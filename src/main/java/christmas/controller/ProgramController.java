@@ -4,12 +4,9 @@ import christmas.domain.CustomerOrder;
 import christmas.domain.Day;
 import christmas.domain.OrderItems;
 import christmas.domain.discount.DiscountInfos;
-import christmas.domain.discount.strategy.*;
 import christmas.domain.dto.output.OrderItemsResponse;
 import christmas.view.InputView;
 import christmas.view.OutputView;
-
-import java.util.List;
 
 public class ProgramController {
     private final InputView inputView;
@@ -30,24 +27,16 @@ public class ProgramController {
         OrderItemsResponse orderItemsResponse = orderItems.toOrderItemsResponse();
         outputView.printOrderedMenu(orderItemsResponse);
 
-        CustomerOrder customerOrder = new CustomerOrder(visitDay, orderItems, createDiscountStrategies());
+        CustomerOrder customerOrder = new CustomerOrder(visitDay, orderItems);
         outputView.printAmountBeforeDiscount(customerOrder);
 
-        DiscountInfos discountInfos = customerOrder.applyDiscount();
+        customerOrder.discount();
+        DiscountInfos discountInfos = customerOrder.getDiscountInfos();
+
         outputView.printFreeGift(discountInfos);
         outputView.printBenefitDetails(discountInfos);
         outputView.printBenefitAmount(discountInfos);
         outputView.printExpectedAmount(customerOrder, discountInfos);
         outputView.printBadge(discountInfos);
-    }
-
-    private List<DiscountStrategy> createDiscountStrategies() {
-        return List.of(
-                new ChristmasDDay(),
-                new Weekday(),
-                new Weekend(),
-                new Special(),
-                new FreeGift()
-        );
     }
 }
