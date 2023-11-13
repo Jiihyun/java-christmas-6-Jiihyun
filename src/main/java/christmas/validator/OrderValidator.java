@@ -1,7 +1,7 @@
 package christmas.validator;
 
-import christmas.domain.Menu;
-import christmas.domain.MenuCategory;
+import christmas.domain.constants.Menu;
+import christmas.domain.constants.MenuCategory;
 import christmas.exception.ExceptionMessage;
 
 import java.util.List;

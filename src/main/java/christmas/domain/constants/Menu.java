@@ -1,11 +1,11 @@
-package christmas.domain;
+package christmas.domain.constants;
 
 import christmas.exception.ExceptionMessage;
 
 import java.util.List;
 import java.util.function.Predicate;
 
-import static christmas.domain.MenuCategory.*;
+import static christmas.domain.constants.MenuCategory.*;
 
 public enum Menu {
     // APPETIZER

@@ -1,5 +1,7 @@
 package christmas.domain.discount;
 
+import christmas.domain.discount.constants.DiscountCategory;
+
 public class DiscountInfo {
     private final DiscountCategory category;
     private final int amount;

@@ -2,13 +2,13 @@ package christmas.domain.discount.strategy;
 
 import christmas.domain.Day;
 import christmas.domain.OrderItems;
-import christmas.domain.discount.DiscountCategory;
 import christmas.domain.discount.DiscountInfo;
+import christmas.domain.discount.constants.DiscountCategory;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
-import static christmas.domain.discount.DiscountAmountRule.SPECIAL_DISCOUNT;
+import static christmas.domain.discount.constants.DiscountAmountRule.SPECIAL_DISCOUNT;
 import static christmas.domain.discount.strategy.ChristmasDDay.CHRISTMAS_DAY;
 
 public class Special implements DiscountStrategy {
@@ -23,7 +23,7 @@ public class Special implements DiscountStrategy {
     @Override
     public boolean isApplicable(Day day, OrderItems orderItems) {
         DayOfWeek dayOfWeek = getDayOfWeek(day);
-        int orderDate = day.getDay();
+        int orderDate = day.toInt();
         return orderDate == CHRISTMAS_DAY || dayOfWeek == DayOfWeek.SUNDAY;
     }
 

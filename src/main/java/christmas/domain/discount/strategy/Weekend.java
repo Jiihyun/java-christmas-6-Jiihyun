@@ -1,22 +1,22 @@
 package christmas.domain.discount.strategy;
 
 import christmas.domain.Day;
-import christmas.domain.MenuCategory;
 import christmas.domain.OrderItems;
+import christmas.domain.constants.MenuCategory;
 import christmas.domain.discount.DiscountInfo;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
-import static christmas.domain.discount.DiscountAmountRule.WEEKEND_DISCOUNT;
-import static christmas.domain.discount.DiscountCategory.WEEKEND;
+import static christmas.domain.discount.constants.DiscountAmountRule.WEEKEND_DISCOUNT;
+import static christmas.domain.discount.constants.DiscountCategory.WEEKEND;
 
 public class Weekend implements DiscountStrategy {
     @Override
     public DiscountInfo applyDiscount(OrderItems orderItems) {
         int totalWeekendDiscountAmount = 0;
 
-        int weekendDiscountQuantity = orderItems.getMenuItems()
+        int weekendDiscountQuantity = orderItems.getOrderItems()
                 .stream()
                 .mapToInt(orderItem -> orderItem.getQuantityInSameCategory(MenuCategory.MAIN))
                 .sum();
@@ -28,7 +28,11 @@ public class Weekend implements DiscountStrategy {
     @Override
     public boolean isApplicable(Day day, OrderItems orderItems) {
         DayOfWeek dayOfWeek = getDayOfWeek(day);
-        return dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY;
+        boolean isWeekend = (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY);
+        boolean hasMain = orderItems.getOrderItems()
+                .stream()
+                .anyMatch(orderItem -> orderItem.getMenu().getMenuCategory() == MenuCategory.MAIN);
+        return isWeekend && hasMain;
     }
 
     private DayOfWeek getDayOfWeek(Day day) {

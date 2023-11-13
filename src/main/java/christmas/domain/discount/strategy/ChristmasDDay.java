@@ -4,8 +4,8 @@ import christmas.domain.Day;
 import christmas.domain.OrderItems;
 import christmas.domain.discount.DiscountInfo;
 
-import static christmas.domain.discount.DiscountAmountRule.CHRISTMAS_MINIMUM_DISCOUNT;
-import static christmas.domain.discount.DiscountCategory.CHRISTMAS_D_DAY;
+import static christmas.domain.discount.constants.DiscountAmountRule.CHRISTMAS_MINIMUM_DISCOUNT;
+import static christmas.domain.discount.constants.DiscountCategory.CHRISTMAS_D_DAY;
 
 public class ChristmasDDay implements DiscountStrategy {
     public static final int CHRISTMAS_DAY = 25;
@@ -24,7 +24,7 @@ public class ChristmasDDay implements DiscountStrategy {
 
     @Override
     public boolean isApplicable(Day day, OrderItems orderItems) {
-        orderDate = day.getDay();
+        orderDate = day.toInt();
         return orderDate <= CHRISTMAS_DAY;
     }
 }

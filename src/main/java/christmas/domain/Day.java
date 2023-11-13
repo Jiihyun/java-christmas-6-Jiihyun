@@ -14,7 +14,7 @@ public class Day {
         this.day = day;
     }
 
-    public int getDay() {
+    public int toInt() {
         return day;
     }
 

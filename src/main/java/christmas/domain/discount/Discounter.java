@@ -6,7 +6,7 @@ import christmas.domain.discount.strategy.*;
 
 import java.util.List;
 
-import static christmas.domain.discount.DiscountAmountRule.MINIMUM_TOTAL_PURCHASED_AMOUNT;
+import static christmas.domain.discount.constants.DiscountAmountRule.MINIMUM_TOTAL_PURCHASED_AMOUNT;
 
 public class Discounter {
     private final Day day;

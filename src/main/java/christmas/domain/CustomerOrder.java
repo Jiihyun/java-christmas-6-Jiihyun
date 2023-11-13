@@ -20,11 +20,19 @@ public class CustomerOrder {
         this.discountInfos = discounter.applyDiscount();
     }
 
-    public DiscountInfos getDiscountInfos() {
-        return discountInfos;
+    public Day getDay() {
+        return day;
+    }
+
+    public OrderItems getOrderItems() {
+        return orderItems;
     }
 
     public int getTotalPurchasedAmount() {
         return totalPurchasedAmount;
+    }
+
+    public DiscountInfos getDiscountInfos() {
+        return discountInfos;
     }
 }

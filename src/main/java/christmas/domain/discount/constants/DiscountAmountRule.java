@@ -1,4 +1,4 @@
-package christmas.domain.discount;
+package christmas.domain.discount.constants;
 
 public enum DiscountAmountRule {
     MINIMUM_TOTAL_PURCHASED_AMOUNT(10_000),
@@ -7,7 +7,7 @@ public enum DiscountAmountRule {
     WEEKDAY_DISCOUNT(2023),
     WEEKEND_DISCOUNT(2023),
     SPECIAL_DISCOUNT(1000),
-    PRICE_OF_CHAMPAIGE(25_000);
+    PRICE_OF_CHAMPAGNE(25_000);
 
     private final int value;
 

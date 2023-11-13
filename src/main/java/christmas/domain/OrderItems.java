@@ -1,6 +1,6 @@
 package christmas.domain;
 
-import christmas.domain.dto.output.OrderItemsResponse;
+import christmas.domain.constants.Menu;
 import christmas.validator.OrderValidator;
 
 import java.util.List;
@@ -38,7 +38,7 @@ public class OrderItems {
         };
     }
 
-    public List<OrderItem> getMenuItems() {
+    public List<OrderItem> getOrderItems() {
         return orderItems;
     }
 
@@ -47,12 +47,6 @@ public class OrderItems {
         return orderItems.stream()
                 .map(OrderItem::getPurchasedAmount)
                 .reduce(0, Integer::sum);
-    }
-
-    public OrderItemsResponse toOrderItemsResponse() {
-        return new OrderItemsResponse(orderItems.stream()
-                .map(OrderItem::toOrderItemResponse)
-                .toList());
     }
 }
 

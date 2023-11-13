@@ -1,4 +1,4 @@
-package christmas.domain;
+package christmas.domain.constants;
 
 import christmas.domain.discount.DiscountInfos;
 
