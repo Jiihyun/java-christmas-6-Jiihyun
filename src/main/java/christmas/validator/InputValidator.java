@@ -10,7 +10,6 @@ public class InputValidator {
     }
 
     public static void validateBlank(String input, ExceptionMessage exceptionMessage) {
-        //TODO: null만 검증해줘야할까, null조차도 검증 안해줘도 될까,,
         if (input == null || input.isBlank()) {
             throw exceptionMessage.getException();
         }
