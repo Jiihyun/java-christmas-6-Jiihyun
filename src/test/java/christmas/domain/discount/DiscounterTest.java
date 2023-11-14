@@ -22,7 +22,7 @@ class DiscounterTest {
                 "아이스크림", 2));
         return Stream.of(
                 Arguments.of(orderItems1, 179_000, 3),
-                Arguments.of(orderItems2, 10_000, 2)
+                Arguments.of(orderItems2, 10_000, 1)
         );
     }
 
@@ -43,7 +43,7 @@ class DiscounterTest {
     @DisplayName("총 구매금액이 할인 최소 금액 이상인 경우 할인이 적용된다.")
     void applyDiscountAboveMinimumAmount(OrderItems orderItems, int totalPurchasedAmount, int size) {
         // given
-        Day day = new Day(5);
+        Day day = new Day(8);
         // when
         Discounter discounter = new Discounter(day, orderItems, totalPurchasedAmount);
         DiscountInfos discountInfos = discounter.applyDiscount();
