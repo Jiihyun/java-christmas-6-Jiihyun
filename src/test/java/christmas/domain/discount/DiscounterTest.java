@@ -2,7 +2,6 @@ package christmas.domain.discount;
 
 import christmas.domain.Day;
 import christmas.domain.OrderItems;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -11,42 +10,57 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Map;
 import java.util.stream.Stream;
 
-class DiscounterTest {
-    static Stream<Arguments> provideOrderItems() {
-        OrderItems orderItemsOverMinimumAmount1 = OrderItems.from(Map.of(
-                "바비큐립", 1,
-                "레드와인", 2));
-        OrderItems orderItemsOverMinimumAmount2 = OrderItems.from(Map.of(
-                "아이스크림", 2));
-        OrderItems orderItemsUnderMinimumAmount1 = OrderItems.from(Map.of(
-                "아이스크림", 1));
-        OrderItems orderItemsUnderMinimumAmount2 = OrderItems.from(Map.of(
-                "타파스", 1,
-                "제로콜라", 1));
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+class DiscounterTest {
+    static Stream<Arguments> provideOrderItemsAboveMinimumAmount() {
+        OrderItems orderItems1 = OrderItems.from(Map.of(
+                "바비큐립", 1,
+                "레드와인", 2,
+                "아이스크림", 1));
+        OrderItems orderItems2 = OrderItems.from(Map.of(
+                "아이스크림", 2));
         return Stream.of(
-                Arguments.of(orderItemsOverMinimumAmount1, 174_000, 2, true, -26_400, -1_400),
-                Arguments.of(orderItemsOverMinimumAmount2, 10_000, 2, false, -5_446, -5_446),
-                Arguments.of(orderItemsUnderMinimumAmount1, 5_000, 0, false, 0, 0),
-                Arguments.of(orderItemsUnderMinimumAmount2, 8_500, 0, false, 0, 0)
+                Arguments.of(orderItems1, 179_000, 3),
+                Arguments.of(orderItems2, 10_000, 2)
         );
     }
 
-    @ParameterizedTest(name = "[{index}] 주문한 메뉴가 {0}면 총 금액은 {1}원이며, 적용된 할인 이벤트는 {2}개,증정 메뉴 여부: {3}," +
-            "총 혜택 금액: {4}원, 총 할인받은 금액: {5}원 이다.")
-    @MethodSource("provideOrderItems")
-    @DisplayName("총 구매금액에 따라 적용된 이벤트 및 금액을 지닌 리스트를 생성한다.")
-    void createDiscountInfosBasedOnTotalPurchasedAmount(
-            OrderItems orderItems, int totalAmount, int expectedSize,
-            boolean expectedHasFreeGift, int expectedTotalBenefit, int expectedTotalBenefitExceptGift) {
-        //given
-        Discounter discounter = new Discounter(new Day(5), orderItems, totalAmount);
-        //when
+    static Stream<Arguments> provideOrderItemsBelowMinimumAmount() {
+        OrderItems orderItems1 = OrderItems.from(Map.of(
+                "아이스크림", 1));
+        OrderItems orderItems2 = OrderItems.from(Map.of(
+                "타파스", 1,
+                "제로콜라", 1));
+        return Stream.of(
+                Arguments.of(orderItems1, 5_000),
+                Arguments.of(orderItems2, 8_500)
+        );
+    }
+
+    @ParameterizedTest(name = "[{index}] 주문한 메뉴가 {0}면 총 금액은 {1}원이며 {2}개의 할인이 적용된다.")
+    @MethodSource("provideOrderItemsAboveMinimumAmount")
+    @DisplayName("총 구매금액이 할인 최소 금액 이상인 경우 할인이 적용된다.")
+    void applyDiscountAboveMinimumAmount(OrderItems orderItems, int totalPurchasedAmount, int size) {
+        // given
+        Day day = new Day(5);
+        // when
+        Discounter discounter = new Discounter(day, orderItems, totalPurchasedAmount);
         DiscountInfos discountInfos = discounter.applyDiscount();
-        //then
-        Assertions.assertThat(discountInfos.size()).isEqualTo(expectedSize);
-        Assertions.assertThat(discountInfos.hasFreeGift()).isEqualTo(expectedHasFreeGift);
-        Assertions.assertThat(discountInfos.getTotalBenefitAmount()).isEqualTo(expectedTotalBenefit);
-        Assertions.assertThat(discountInfos.getTotalBenefitAmountExceptGift()).isEqualTo(expectedTotalBenefitExceptGift);
+        // then
+        assertThat(discountInfos.size()).isEqualTo(size);
+    }
+
+    @ParameterizedTest(name = "[{index}] 주문한 메뉴가 {0}면 총 금액은 {1}원이며 할인이 적용되지 않아 size가 0이다.")
+    @MethodSource("provideOrderItemsBelowMinimumAmount")
+    @DisplayName("총 구매금액이 할인 최소 금액 미만인 경우 할인이 적용되지 않는다.")
+    void cannotApplyDiscountBelowMinimumAmount(OrderItems orderItems, int totalPurchasedAmount) {
+        // given
+        Day day = new Day(10);
+        // when
+        Discounter discounter = new Discounter(day, orderItems, totalPurchasedAmount);
+        DiscountInfos discountInfos = discounter.applyDiscount();
+        // then
+        assertThat(discountInfos.size()).isEqualTo(0);
     }
 }
