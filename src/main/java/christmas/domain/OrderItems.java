@@ -12,7 +12,7 @@ public class OrderItems {
 
     private final List<OrderItem> orderItems;
 
-    public OrderItems(List<OrderItem> orderItems) {
+    private OrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
     }
 
