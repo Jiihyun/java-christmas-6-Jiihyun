@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class DiscountInfos {
+    private static final String FREE_GIFT = "증정 이벤트";
     private final List<DiscountInfo> discountInfos;
 
     public DiscountInfos(List<DiscountInfo> discountInfos) {
@@ -13,7 +14,7 @@ public class DiscountInfos {
 
     public boolean hasFreeGift() {
         return discountInfos.stream()
-                .anyMatch(DiscountInfo::hasMinimumAmountForFreeGift);
+                .anyMatch(DiscountInfo::hasFreeGiftCategory);
     }
 
     public int size() {
@@ -35,10 +36,7 @@ public class DiscountInfos {
 
     public int getTotalBenefitAmountExceptGift() {
         return discountInfos.stream()
-                .filter(discountInfo -> {
-                    String freeGift = "증정 이벤트";
-                    return !discountInfo.getCategoryName().equals(freeGift);
-                })
+                .filter(discountInfo -> !discountInfo.getCategoryName().equals(FREE_GIFT))
                 .mapToInt(DiscountInfo::getAmount)
                 .sum();
     }

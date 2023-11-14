@@ -12,7 +12,7 @@ public class FreeGift implements DiscountStrategy {
     @Override
     public DiscountInfo applyDiscount(OrderItems orderItems) {
 
-        int totalFreeGiftAmount = -PRICE_OF_CHAMPAGNE.getValue();
+        int totalFreeGiftAmount = (-PRICE_OF_CHAMPAGNE.getValue());
         return new DiscountInfo(DiscountCategory.FREE_GIFT, totalFreeGiftAmount);
     }
 

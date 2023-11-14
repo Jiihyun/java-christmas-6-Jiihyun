@@ -11,7 +11,7 @@ public class DiscountInfo {
         this.amount = amount;
     }
 
-    public boolean hasMinimumAmountForFreeGift() {
+    public boolean hasFreeGiftCategory() {
         return category == DiscountCategory.FREE_GIFT;
     }
 

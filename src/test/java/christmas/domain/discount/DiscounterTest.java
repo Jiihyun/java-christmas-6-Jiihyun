@@ -32,7 +32,8 @@ class DiscounterTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "[{index}] 주문한 메뉴가 {0}면 총 금액은 {1}원이며, 적용된 할인 이벤트는 {2}개,증정 메뉴 여부: {3}," +
+            "총 혜택 금액: {4}원, 총 할인받은 금액: {5}원 이다.")
     @MethodSource("provideOrderItems")
     @DisplayName("총 구매금액에 따라 적용된 이벤트 및 금액을 지닌 리스트를 생성한다.")
     void createDiscountInfosBasedOnTotalPurchasedAmount(
