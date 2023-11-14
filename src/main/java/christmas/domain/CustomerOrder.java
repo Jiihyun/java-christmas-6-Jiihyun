@@ -1,7 +1,7 @@
 package christmas.domain;
 
 import christmas.domain.discount.DiscountInfos;
-import christmas.domain.discount.Discounter;
+import christmas.domain.discount.DiscountProcessor;
 
 public class CustomerOrder {
     private final Day day;
@@ -16,8 +16,8 @@ public class CustomerOrder {
     }
 
     public void discount() {
-        Discounter discounter = new Discounter(day, orderItems, totalPurchasedAmount);
-        this.discountInfos = discounter.applyDiscount();
+        DiscountProcessor discountProcessor = new DiscountProcessor(day, orderItems, totalPurchasedAmount);
+        this.discountInfos = discountProcessor.applyDiscount();
     }
 
     public Day getDay() {

@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-class DiscounterTest {
+class DiscountProcessorTest {
     static Stream<Arguments> provideOrderItemsAboveMinimumAmount() {
         OrderItems orderItems1 = OrderItems.from(Map.of(
                 "바비큐립", 1,
@@ -45,8 +45,8 @@ class DiscounterTest {
         // given
         Day day = new Day(8);
         // when
-        Discounter discounter = new Discounter(day, orderItems, totalPurchasedAmount);
-        DiscountInfos discountInfos = discounter.applyDiscount();
+        DiscountProcessor discountProcessor = new DiscountProcessor(day, orderItems, totalPurchasedAmount);
+        DiscountInfos discountInfos = discountProcessor.applyDiscount();
         // then
         assertThat(discountInfos.size()).isEqualTo(size);
     }
@@ -58,8 +58,8 @@ class DiscounterTest {
         // given
         Day day = new Day(10);
         // when
-        Discounter discounter = new Discounter(day, orderItems, totalPurchasedAmount);
-        DiscountInfos discountInfos = discounter.applyDiscount();
+        DiscountProcessor discountProcessor = new DiscountProcessor(day, orderItems, totalPurchasedAmount);
+        DiscountInfos discountInfos = discountProcessor.applyDiscount();
         // then
         assertThat(discountInfos.size()).isEqualTo(0);
     }

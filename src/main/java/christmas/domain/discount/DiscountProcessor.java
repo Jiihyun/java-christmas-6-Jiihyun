@@ -8,13 +8,13 @@ import java.util.List;
 
 import static christmas.domain.discount.constants.DiscountAmountRule.MINIMUM_TOTAL_PURCHASED_AMOUNT;
 
-public class Discounter {
+public class DiscountProcessor {
     private final Day day;
     private final OrderItems orderItems;
     private final int totalPurchasedAmount;
     private final List<DiscountStrategy> discountStrategies = createDiscountStrategies();
 
-    public Discounter(Day day, OrderItems orderItems, int totalPurchasedAmount) {
+    public DiscountProcessor(Day day, OrderItems orderItems, int totalPurchasedAmount) {
         this.day = day;
         this.orderItems = orderItems;
         this.totalPurchasedAmount = totalPurchasedAmount;
