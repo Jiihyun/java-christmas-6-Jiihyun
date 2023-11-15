@@ -164,12 +164,12 @@
 # ‼️ 기능 구현을 위해 지켜야 할 요구사항
 
 - [x] 에러메세지 `[ERROR]` 로 시작할 것
-- [] indent depth 2이하
-- [] 메서드 길이 최대 15라인
-- [] JUnit 5와 AssertJ를 이용하여 기능 목록이 정상 동작함을 테스트 코드로 확인
-- [] 도메인 로직 단위 테스트 작성
-- [] InputView, OutputView 클래스를 참고하여 입출력 클래스를 구현
+- [x] indent depth 2이하
+- [x] 메서드 길이 최대 15라인
+- [x] JUnit 5와 AssertJ를 이용하여 기능 목록이 정상 동작함을 테스트 코드로 확인
+- [x] 도메인 로직 단위 테스트 작성
+- [x] InputView, OutputView 클래스를 참고하여 입출력 클래스를 구현
 - [x] 사용자 입력값은 `camp.nextstep.edu.missionutils.Console`의 `readLine()` 활용
-- [] IllegalArgumentException, IllegalStateException 등과 같은 명확한 유형 처리
-- [] 변수 이름에 자료형 사용하지 않기
-- [] 구현순서 (상수-인스턴스변수-생성자-메서드)
+- [x] IllegalArgumentException, IllegalStateException 등과 같은 명확한 유형 처리
+- [x] 변수 이름에 자료형 사용하지 않기
+- [x] 구현순서 (상수-인스턴스변수-생성자-메서드)
