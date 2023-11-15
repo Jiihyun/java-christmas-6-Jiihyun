@@ -8,11 +8,12 @@ import christmas.exception.ExceptionMessage;
 import christmas.io.reader.Reader;
 import christmas.io.writer.Writer;
 
-import java.util.Map;
+import java.util.function.Function;
 
 import static christmas.view.constants.PrintMessage.*;
 
 public class InputView {
+    private static final int MAX_RETRIES = 20;
     private final Writer writer;
     private final Reader reader;
 
@@ -25,31 +26,41 @@ public class InputView {
         writer.writeln(INPUT_START.getMessage());
         Day visitDay = readVisitDay();
         OrderItems orderItems = readMenuItems();
+        reader.close();
         return new CustomerOrder(visitDay, orderItems);
     }
 
-    public Day readVisitDay() {
-        //TODO: 재귀에 시도 횟수 제한 걸어주기(스택오버플로우를 막자!!), 콘솔 다 쓰고 close 해주기
-        writer.writeln(INPUT_VISIT_DAY.getMessage());
+    private Day readVisitDay() {
+        return readInput(
+                INPUT_VISIT_DAY.getMessage(),
+                input -> new Day(Converter.convertToInt(input, ExceptionMessage.INPUT_DAY_FORMAT)),
+                MAX_RETRIES
+        );
+    }
+
+    private OrderItems readMenuItems() {
+        return readInput(
+                INPUT_MENU_AND_QUANTITY.getMessage(),
+                input -> OrderItems.from(Converter.convertToMap(input, ExceptionMessage.INPUT_ORDER_FORMAT)),
+                MAX_RETRIES
+        );
+    }
+
+    private <T> T readInput(String message, Function<String, T> converter, int retryCount) {
+        validateRetryCount(retryCount);
+        writer.writeln(message);
         try {
             String input = reader.readLine();
-            int day = Converter.convertToInt(input, ExceptionMessage.INPUT_DAY_FORMAT);
-            return new Day(day);
+            return converter.apply(input);
         } catch (IllegalArgumentException exception) {
             writer.writeln(exception.getMessage());
-            return readVisitDay();
+            return readInput(message, converter, retryCount - 1);
         }
     }
 
-    public OrderItems readMenuItems() {
-        writer.writeln(INPUT_MENU_AND_QUANTITY.getMessage());
-        try {
-            String input = reader.readLine();
-            Map<String, Integer> menuNamesAndQuantities = Converter.convertToMap(input, ExceptionMessage.INPUT_ORDER_FORMAT);
-            return OrderItems.from(menuNamesAndQuantities);
-        } catch (IllegalArgumentException exception) {
-            writer.writeln(exception.getMessage());
-            return readMenuItems();
+    private void validateRetryCount(int retryCount) {
+        if (retryCount < 0) {
+            throw ExceptionMessage.INPUT_MAX_RETRIES.getException();
         }
     }
 }

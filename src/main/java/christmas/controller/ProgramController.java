@@ -15,9 +15,13 @@ public class ProgramController {
     }
 
     public void run() {
-        CustomerOrder customerOrder = inputView.readCustomerOrder();
-        customerOrder.discount();
-        CustomerOrderResponse customerOrderResponse = CustomerOrderResponse.of(customerOrder);
-        outputView.printCustomerOrder(customerOrderResponse);
+        try {
+            CustomerOrder customerOrder = inputView.readCustomerOrder();
+            customerOrder.discount();
+            CustomerOrderResponse customerOrderResponse = CustomerOrderResponse.of(customerOrder);
+            outputView.printCustomerOrder(customerOrderResponse);
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception.getMessage());
+        }
     }
 }
