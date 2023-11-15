@@ -7,7 +7,6 @@ import christmas.domain.discount.DiscountInfo;
 import christmas.domain.discount.constants.DiscountCategory;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 
 import static christmas.domain.discount.constants.DiscountAmountRule.WEEKDAY_DISCOUNT;
 
@@ -27,7 +26,7 @@ public class Weekday implements DiscountStrategy {
 
     @Override
     public boolean isApplicable(Day day, OrderItems orderItems) {
-        DayOfWeek dayOfWeek = getDayOfWeek(day);
+        DayOfWeek dayOfWeek = day.getDayOfWeek();
         boolean isWeekday = (dayOfWeek != DayOfWeek.FRIDAY && dayOfWeek != DayOfWeek.SATURDAY);
         boolean hasDessert = orderItems.getOrderItems()
                 .stream()
@@ -35,8 +34,5 @@ public class Weekday implements DiscountStrategy {
         return isWeekday && hasDessert;
     }
 
-    private DayOfWeek getDayOfWeek(Day day) {
-        LocalDate localDate = day.toLocalDate();
-        return localDate.getDayOfWeek();
-    }
+
 }

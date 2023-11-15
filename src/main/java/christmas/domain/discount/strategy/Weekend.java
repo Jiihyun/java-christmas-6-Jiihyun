@@ -6,7 +6,6 @@ import christmas.domain.constants.MenuCategory;
 import christmas.domain.discount.DiscountInfo;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 
 import static christmas.domain.discount.constants.DiscountAmountRule.WEEKEND_DISCOUNT;
 import static christmas.domain.discount.constants.DiscountCategory.WEEKEND;
@@ -27,16 +26,11 @@ public class Weekend implements DiscountStrategy {
 
     @Override
     public boolean isApplicable(Day day, OrderItems orderItems) {
-        DayOfWeek dayOfWeek = getDayOfWeek(day);
+        DayOfWeek dayOfWeek = day.getDayOfWeek();
         boolean isWeekend = (dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY);
         boolean hasMain = orderItems.getOrderItems()
                 .stream()
                 .anyMatch(orderItem -> orderItem.getMenu().getMenuCategory() == MenuCategory.MAIN);
         return isWeekend && hasMain;
-    }
-
-    private DayOfWeek getDayOfWeek(Day day) {
-        LocalDate localDate = day.toLocalDate();
-        return localDate.getDayOfWeek();
     }
 }

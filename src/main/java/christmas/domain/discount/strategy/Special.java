@@ -6,7 +6,6 @@ import christmas.domain.discount.DiscountInfo;
 import christmas.domain.discount.constants.DiscountCategory;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 
 import static christmas.domain.discount.constants.DiscountAmountRule.SPECIAL_DISCOUNT;
 import static christmas.domain.discount.strategy.ChristmasDDay.CHRISTMAS_DAY;
@@ -22,13 +21,8 @@ public class Special implements DiscountStrategy {
 
     @Override
     public boolean isApplicable(Day day, OrderItems orderItems) {
-        DayOfWeek dayOfWeek = getDayOfWeek(day);
+        DayOfWeek dayOfWeek = day.getDayOfWeek();
         int orderDate = day.toInt();
         return orderDate == CHRISTMAS_DAY || dayOfWeek == DayOfWeek.SUNDAY;
-    }
-
-    private DayOfWeek getDayOfWeek(Day day) {
-        LocalDate localDate = day.toLocalDate();
-        return localDate.getDayOfWeek();
     }
 }

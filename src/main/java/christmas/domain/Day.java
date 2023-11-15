@@ -2,6 +2,7 @@ package christmas.domain;
 
 import christmas.validator.DayValidator;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 public class Day {
@@ -20,5 +21,10 @@ public class Day {
 
     public LocalDate toLocalDate() {
         return LocalDate.of(2023, 12, day);
+    }
+
+    public DayOfWeek getDayOfWeek() {
+        LocalDate localDate = toLocalDate();
+        return localDate.getDayOfWeek();
     }
 }
