@@ -57,6 +57,6 @@ class SpecialTest {
         DiscountInfo discountInfo = specialStrategy.applyDiscount(orderItems);
         // then
         assertThat(discountInfo.getCategoryName()).isEqualTo(SPECIAL.getName());
-        assertThat(discountInfo.getAmount()).isEqualTo(SPECIAL_DISCOUNT.getValue());
+        assertThat(discountInfo.getAmount()).isEqualTo(-SPECIAL_DISCOUNT.getValue());
     }
 }
