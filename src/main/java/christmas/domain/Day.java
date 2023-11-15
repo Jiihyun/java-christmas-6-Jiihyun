@@ -19,12 +19,8 @@ public class Day {
         return day;
     }
 
-    public LocalDate toLocalDate() {
-        return LocalDate.of(2023, 12, day);
-    }
-
     public DayOfWeek getDayOfWeek() {
-        LocalDate localDate = toLocalDate();
+        LocalDate localDate = LocalDate.of(2023, 12, day);
         return localDate.getDayOfWeek();
     }
 }

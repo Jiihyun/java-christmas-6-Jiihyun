@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -35,13 +36,13 @@ class DayTest {
 
     @ParameterizedTest
     @ValueSource(ints = {1, 20, 31})
-    @DisplayName("Day 클래스의 값을 통해 LocalDate를 생성한다.")
-    void getLocalDate(int dayValue) {
+    @DisplayName("날짜를 통해 요일을 얻을 수 있다.")
+    void getDayOfWeekWhenPutDayValue(int dayValue) {
         // given
         Day day = new Day(dayValue);
         // when
-        LocalDate localDate = day.toLocalDate();
+        DayOfWeek dayOfWeek = day.getDayOfWeek();
         // then
-        assertThat(localDate).isEqualTo(LocalDate.of(2023, 12, dayValue));
+        assertThat(dayOfWeek).isEqualTo(LocalDate.of(2023, 12, dayValue).getDayOfWeek());
     }
 }
