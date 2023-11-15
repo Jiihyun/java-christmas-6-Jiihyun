@@ -7,6 +7,7 @@ import christmas.domain.OrderItems;
 import christmas.exception.ExceptionMessage;
 import christmas.io.reader.Reader;
 import christmas.io.writer.Writer;
+import christmas.validator.InputValidator;
 
 import java.util.function.Function;
 
@@ -47,7 +48,7 @@ public class InputView {
     }
 
     private <T> T readInput(String message, Function<String, T> converter, int retryCount) {
-        validateRetryCount(retryCount);
+        InputValidator.validateRetryCount(retryCount);
         writer.writeln(message);
         try {
             String input = reader.readLine();
@@ -55,12 +56,6 @@ public class InputView {
         } catch (IllegalArgumentException exception) {
             writer.writeln(exception.getMessage());
             return readInput(message, converter, retryCount - 1);
-        }
-    }
-
-    private void validateRetryCount(int retryCount) {
-        if (retryCount < 0) {
-            throw ExceptionMessage.INPUT_MAX_RETRIES.getException();
         }
     }
 }

@@ -21,4 +21,10 @@ public class InputValidator {
             throw ExceptionMessage.INPUT_ORDER_FORMAT.getException();
         }
     }
+
+    public static void validateRetryCount(int retryCount) {
+        if (retryCount < 0) {
+            throw ExceptionMessage.INPUT_MAX_RETRIES.getException();
+        }
+    }
 }
