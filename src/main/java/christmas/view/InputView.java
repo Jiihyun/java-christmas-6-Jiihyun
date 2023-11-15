@@ -24,11 +24,16 @@ public class InputView {
     }
 
     public CustomerOrder readCustomerOrder() {
-        writer.writeln(INPUT_START.getMessage());
-        Day visitDay = readVisitDay();
-        OrderItems orderItems = readMenuItems();
-        reader.close();
-        return new CustomerOrder(visitDay, orderItems);
+        try {
+            writer.writeln(INPUT_START.getMessage());
+            Day visitDay = readVisitDay();
+            OrderItems orderItems = readMenuItems();
+            reader.close();
+            return new CustomerOrder(visitDay, orderItems);
+        } catch (IllegalArgumentException exception) {
+            writer.writeln(exception.getMessage());
+            throw exception;
+        }
     }
 
     private Day readVisitDay() {
