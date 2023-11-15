@@ -1,8 +1,8 @@
 package christmas.domain.discount;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class DiscountInfos {
     private static final String FREE_GIFT = "증정 이벤트";
@@ -22,10 +22,11 @@ public class DiscountInfos {
     }
 
     public Map<String, Integer> getNameAndAmount() {
-        return discountInfos.stream()
-                .collect(Collectors.toMap(
-                        DiscountInfo::getCategoryName,
-                        DiscountInfo::getAmount));
+        LinkedHashMap<String, Integer> linkedHashMap = new LinkedHashMap<>();
+        for (DiscountInfo discountInfo : discountInfos) {
+            linkedHashMap.put(discountInfo.getCategoryName(), discountInfo.getAmount());
+        }
+        return linkedHashMap;
     }
 
     public int getTotalBenefitAmount() {
